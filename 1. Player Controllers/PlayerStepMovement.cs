@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerGridMovement : MonoBehaviour
+public class PlayerStepMovement : MonoBehaviour
 {
     //SCRIPT OVERVIEW: ================================================================================================
-    //This allows the player to move a specified gridSize, or "step" size, at a regular interval (walkDelay).
+    //This allows the player to move a specified step size at a regular interval (walkDelay).
     //The GridMovement function deals with the input (both arrow keys and WASD) then sends what direction is
     //pressed to a Coroutine that delays the movement, or "steps", by the interval.
 
@@ -24,8 +24,8 @@ public class PlayerGridMovement : MonoBehaviour
     bool moving;
 
     //Create a variable that you can edit in the Unity editor (SerializeField)
-    //that will set the gridSize or the size of the "step" the player will take each keypress
-    [SerializeField] float gridSize = 1;
+    //that will set the stepSize or the size of the "step" the player will take each keypress
+    [SerializeField] float stepSize = 1;
 
     //Create a variable that will be the speed of player moving from "step" to "step"
     [SerializeField] float walkSpeed = 40;
@@ -126,18 +126,18 @@ public class PlayerGridMovement : MonoBehaviour
             case "left":
 
                 //then update the newPos vector with wherever the Player is current located
-                //plus the gridSize (or "step" size) in the left direction.
+                //plus the stepSize in the left direction.
                 //Repeat this for all other directions
-                newPos = transform.position + new Vector3(-gridSize, 0);
+                newPos = transform.position + new Vector3(-stepSize, 0);
                 break;
             case "right":
-                newPos = transform.position + new Vector3(gridSize, 0);
+                newPos = transform.position + new Vector3(stepSize, 0);
                 break;
             case "up":
-                newPos = transform.position + new Vector3(0, gridSize);
+                newPos = transform.position + new Vector3(0, stepSize);
                 break;
             case "down":
-                newPos = transform.position + new Vector3(0, -gridSize);
+                newPos = transform.position + new Vector3(0, -stepSize);
                 break;
         }
 
