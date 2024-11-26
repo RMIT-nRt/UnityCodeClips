@@ -9,9 +9,9 @@ public class PlayerGridMovement : MonoBehaviour
     //The GridMovement function deals with the input (both arrow keys and WASD) then sends what direction is
     //pressed to a Coroutine that delays the movement, or "steps", by the interval.
 
-    //OPTIONAL: A "BodyRotating" has been added if you need to rotate the player sprite in the direction they
-    //are moving. If this is required then the player sprite image gameObject MUST be a child gameObject of this
-    //player controller and assigned to the "bodySprite" variable. 
+    //OPTIONAL: "BodyRotating" has been added if you need to rotate the player sprite in the direction they
+    //are moving. If this is required then the player sprite image gameObject MUST be a child gameObject of
+    //this player controller and assigned to the "bodySprite" variable. 
 
 
     //Create varible (rb) for rigidbody
