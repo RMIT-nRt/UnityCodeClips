@@ -8,7 +8,7 @@ public class PlayerStrictMovement : MonoBehaviour
     //A simple movement script that only allows player to move in a single direction, either vertical
     //or horizontal and not diagonally. We then apply this to the velocity of the rigidbody.
 
-    //OPTIONAL: A "BodyRotating" has been added if you need to rotate the player sprite in the direction they
+    //OPTIONAL: "BodyRotating" has been added if you need to rotate the player sprite in the direction they
     //are moving. If this is required then the player sprite image gameObject MUST be a child gameObject of this
     //player controllerand assigned to the "bodySprite" variable
 
