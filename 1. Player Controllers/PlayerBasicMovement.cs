@@ -21,7 +21,7 @@ public class PlayerBasicMovement : MonoBehaviour
     //Create variable for walkSpeed that can be adjusted in the Unity Editor (SerializeField)
     [SerializeField] float walkSpeed = 3;
 
-    //OPTIONAL: Create Transform variable for the body sprite gameObject
+    //OPTIONAL: Create Transform variable for the body sprite gameObject and rotation speed.
     [SerializeField] Transform bodySprite;
     [SerializeField] float rotationSpeed = 3;
 
