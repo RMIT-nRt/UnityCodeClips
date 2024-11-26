@@ -8,7 +8,7 @@ public class PlayerStrictMovement : MonoBehaviour
     //A simple movement script that only allows player to move in a single direction, either vertical
     //or horizontal and not diagonally. We then apply this to the velocity of the rigidbody.
 
-    //OPTIONAL: "BodyRotating" has been added if you need to rotate the player sprite in the direction they
+    //OPTIONAL: A "BodyRotating" has been added if you need to rotate the player sprite in the direction they
     //are moving. If this is required then the player sprite image gameObject MUST be a child gameObject of this
     //player controllerand assigned to the "bodySprite" variable
 
@@ -25,9 +25,9 @@ public class PlayerStrictMovement : MonoBehaviour
     //Create variable for walkSpeed that can be adjusted in the Unity Editor (SerializeField)
     [SerializeField] float walkSpeed = 3;
 
-    //OPTIONAL: Create Transform variable for the body sprite gameObject.
+    //OPTIONAL: Create Transform variable for the body sprite gameObject and rotation speed.
     [SerializeField] Transform bodySprite;
-
+    [SerializeField] float rotationSpeed = 3;
 
     void Start()
     {
@@ -97,23 +97,17 @@ public class PlayerStrictMovement : MonoBehaviour
     //Custom body rotation method/function =================================================================================
     void BodyRotation()
     {
-        //If the direction keys are pressed (arrow keys or WASD) then set the appropriate rotation
-        //REMINDER: The rotation amounts below are relative to the body first facing upwards.
-        if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
+        //Create a vector variable with both axis inputs
+        Vector2 moveDir = new Vector2(hInput, vInput);
+
+        //As long as a direction key is pressed...
+        if (moveDir != Vector2.zero)
         {
-            bodySprite.localRotation = Quaternion.Euler(0, 0, 90);
-        }
-        else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            bodySprite.localRotation = Quaternion.Euler(0, 0, -90);
-        }
-        else if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
-        {
-            bodySprite.localRotation = Quaternion.Euler(0, 0, 0);
-        }
-        else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            bodySprite.localRotation = Quaternion.Euler(0, 0, 180);
+            //Set the rotation with the specified forward direction relative to the direction of movement.
+            Quaternion toRot = Quaternion.LookRotation(Vector3.forward, moveDir);
+
+            //Rotate the bodySprite to desired rotation
+            bodySprite.rotation = Quaternion.RotateTowards(bodySprite.rotation, toRot, rotationSpeed);
         }
     }
 }

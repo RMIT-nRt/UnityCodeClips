@@ -10,8 +10,8 @@ public class PlayerGridMovement : MonoBehaviour
     //pressed to a Coroutine that delays the movement, or "steps", by the interval.
 
     //OPTIONAL: "BodyRotating" has been added if you need to rotate the player sprite in the direction they
-    //are moving. If this is required then the player sprite image gameObject MUST be a child gameObject of
-    //this player controller and assigned to the "bodySprite" variable. 
+    //are moving. If this is required then the player sprite image gameObject MUST be a child gameObject of this
+    //player controller and assigned to the "bodySprite" variable. 
 
 
     //Create varible (rb) for rigidbody
@@ -33,8 +33,9 @@ public class PlayerGridMovement : MonoBehaviour
     //Create a varible which will be the time between each of those "steps"
     [SerializeField] float walkDelay = 0.3f;
 
-    //OPTIONAL: Create Transform variable for the body sprite gameObject
+    //OPTIONAL: Create Transform variable for the body sprite gameObject and rotation speed.
     [SerializeField] Transform bodySprite;
+    [SerializeField] float rotationSpeed = 3;
 
 
     void Start()
@@ -51,6 +52,9 @@ public class PlayerGridMovement : MonoBehaviour
     {
         //Run custom movement method/function
         GridMovement();
+
+        //Run custom rotation method/function
+        BodyRotating();
     }
 
 
@@ -74,25 +78,25 @@ public class PlayerGridMovement : MonoBehaviour
                 StartCoroutine(MovementDelay("left"));
 
                 //Optional: if needing player sprite to rotate in direction of movement
-                BodyRotating("left");
+                //BodyRotating("left");
             }
 
             if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
             {
                 StartCoroutine(MovementDelay("right"));
-                BodyRotating("right");
+                //BodyRotating("right");
             }
 
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
             {
                 StartCoroutine(MovementDelay("up"));
-                BodyRotating("up");
+                //BodyRotating("up");
             }
 
             if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
             {
                 StartCoroutine(MovementDelay("down"));
-                BodyRotating("down");
+                //BodyRotating("down");
             }
         }
 
@@ -146,28 +150,23 @@ public class PlayerGridMovement : MonoBehaviour
 
 
     //Custom body rotate method/function =================================================================================
-    //NOTE: You can add a string variable within the brackets of the method which means
-    //a string MUST be added when calling the method/function (see line 77). This vartiable will
-    //then be available within the method/function
-    void BodyRotating(string dir)
+    void BodyRotating()
     {
-        switch (dir)
+        //Get direction keypresses (arrow keys and WASD) and store in variables
+        float hInput = Input.GetAxis("Horizontal");
+        float vInput = Input.GetAxis("Vertical");
+
+        //Create a vector variable with both axis inputs
+        Vector2 moveDir = new Vector2(hInput, vInput);
+
+        //As long as a direction key is pressed...
+        if (moveDir != Vector2.zero)
         {
-            //If method/function is called with the "dir" string set to "left"
-            //then rotate the bodySprtie to the appropriate rotation.
-            //REMINDER: The rotation amounts below are relative to the body first facing upwards.
-            case "left":
-                bodySprite.localRotation = Quaternion.Euler(0, 0, 90);
-                break;
-            case "right":
-                bodySprite.localRotation = Quaternion.Euler(0, 0, -90);
-                break;
-            case "up":
-                bodySprite.localRotation = Quaternion.Euler(0, 0, 0);
-                break;
-            case "down":
-                bodySprite.localRotation = Quaternion.Euler(0, 0, 180);
-                break;
+            //Set the rotation with the specified forward direction relative to the direction of movement.
+            Quaternion toRot = Quaternion.LookRotation(Vector3.forward, moveDir);
+
+            //Rotate the bodySprite to desired rotation
+            bodySprite.rotation = Quaternion.RotateTowards(bodySprite.rotation, toRot, rotationSpeed);
         }
     }
 
