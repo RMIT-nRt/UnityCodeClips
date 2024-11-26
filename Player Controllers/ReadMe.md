@@ -1,4 +1,4 @@
-| PLAYER MOVEMENT TYPES: | Description: | 
+| Player Movement Types: | Description: | 
 | ------------ | ------------ |
 | ![alt text](https://github.com/RMIT-nRt/UnityCodeClips/blob/main/Player%20Controllers/_gifs/PlayerBasicMovement.gif) | <br/>**Player "Basic" Movement** <br/>A simple script that allows the player to move in all direction including diagonally.|
 | ![alt text](https://github.com/RMIT-nRt/UnityCodeClips/blob/main/Player%20Controllers/_gifs/PlayerStrictMovement.gif) | <br/>**Player "Strict" Movement** <br/>A script that allows the player to move left,right, up & down but **NOT** diagonally.|
