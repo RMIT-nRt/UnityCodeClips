@@ -64,8 +64,8 @@ public class EnemyDamager : MonoBehaviour
         //Wait for pushBackTime...
         yield return new WaitForSeconds(pushBackTime);
 
-        ///...then turn the players movement script back on.
-        /////NOTE: below requires the PlayerBasicMovement script but this can be whatever your movement script is called.
+        //...then turn the players movement script back on.
+        //NOTE: below requires the PlayerBasicMovement script but this can be whatever your movement script is called.
         player.GetComponent<PlayerBasicMovement>().enabled = true;
     }
 }
