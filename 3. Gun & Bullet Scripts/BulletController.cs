@@ -8,8 +8,9 @@ public class BulletController : MonoBehaviour
     //Simple script that will receive the direction of the bullet from the player
     //and apply it to the bullets rigidbody velocity.
     //It will also deal with what the bullet collides into.
-    //Optionally it will instantiate (spawn) a blood particle system that will
-    //for a short time if the bullet hits an enemy.
+    
+    //OPTIONAL: It will instantiate (spawn) a blood particle system that will
+    //run for a short time if the bullet hits an enemy.
 
 
     //Create varible (rb) for rigidbody
