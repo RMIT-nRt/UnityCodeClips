@@ -21,6 +21,9 @@ public class SearchAndDestroy : MonoBehaviour
     //Create a variable for walk speed. Ensure this is less then the player walk speed
     [SerializeField] float walkSpeed = 4;
 
+    //Create a variable for when the enemy will return home (in seconds)
+    [SerializeField] float homeReturnTime = 6;
+
     //Create a variable to link the Health script
     [SerializeField] Health health;
 
@@ -36,14 +39,24 @@ public class SearchAndDestroy : MonoBehaviour
     //Create a temporary quarternion variable, that will store the random rotation
     Quaternion searchRot;
 
-    //Create a transform variable to store the player
+    //Create a transformvariable to store the player
     Transform player;
+
+    //Create a bool to start the ReturnHome coroutine
+    bool returning = false;
+
+    //Create 2 vector variables to store home position and current position
+    Vector3 homePos, currentPos;
 
 
     void Start()
     {
         //Assign the player by find it with it's tag
         player = GameObject.FindGameObjectWithTag("Player").transform;
+
+        //Assign enemy's homePos & currentPos position as home
+        homePos = transform.position;
+        currentPos = transform.position;
 
         //Start the custom search coroutine (below)
         StartCoroutine(Search());
@@ -63,11 +76,29 @@ public class SearchAndDestroy : MonoBehaviour
 
             //Move towards the player at walkSpeed multiplied by time
             transform.position = Vector2.MoveTowards(transform.position, player.position, walkSpeed * Time.deltaTime);
+
+            //Update current position
+            currentPos = transform.position;
+
+            //Set returning to true in preparation
+            returning = true;
         }
         else
         {
+            //Now that the enemy has chased the player we will start the ReturnHome cooroutine only once by quickly
+            //turn the returning bool to false after triggering the coroutine.
+            if (returning)
+            {
+                StartCoroutine(ReturnHome());
+                returning = false;
+            }
+
             //Randomly rotate in search of player utilising the searchRot quaternion
             transform.rotation = Quaternion.Lerp(transform.rotation, searchRot, searchSpeed * Time.deltaTime);
+
+            //Move towards the current position at walkSpeed multiplied by time.
+            //This will update to home position after the ReturnHome coroutine completes
+            transform.position = Vector2.MoveTowards(transform.position, currentPos, walkSpeed * Time.deltaTime);
         }
     }
 
@@ -83,6 +114,15 @@ public class SearchAndDestroy : MonoBehaviour
 
         //Start the coroutine again
         StartCoroutine(Search());
+    }
+
+
+    //Custom return home coroutine ======================================================================
+    //This will just set the currentPos to the homePos after a set time (homeReturnTime) and return the enmy to homePos
+    IEnumerator ReturnHome()
+    {
+        yield return new WaitForSeconds(homeReturnTime);
+        currentPos = homePos;
     }
 
 
