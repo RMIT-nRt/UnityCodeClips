@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class collectKey : MonoBehaviour
 {
-    // Super simple one key for one dooor
+    // Super simple: "One key to rule one dooor"
     
     [SerializeField] Collider2D Door; //Ensure your door object has a 2D Collider
 
